@@ -1,5 +1,5 @@
 const readline = require("readline-sync");
-const { joinOr } = require("./joinOr");
+//const { joinOr } = require("../../ttt/joinOr");
 
 const INITIAL_MARKER = " ";
 const HUMAN_MARKER = "X";
@@ -132,55 +132,18 @@ while (true) {
 
 prompt("Thanks for playing Tic Tac Toe!");
 
-//Extra Features (to be implemented)
-
-// function scoreTracker(someoneWon, scoreBoard) {
-//   if (someoneWon(board)) {
-//     if (`${playOneGame(board)}` === "Player") {
-//       printMessage(MESSAGES.playerWinsGame);
-//       scoreBoard.playerScore++;
-//     } else if (`${playOneGame(board)}` === "Computer") {
-//       printMessage(MESSAGES.compWinsGame);
-//       scoreBoard.compScore++;
-//     }
-//   } else {
-//     printMessage(MESSAGES.tieMsg);
-//   }
-// }
-
-// function displayScores(scoreBoard, msg) {
-//   printMessage(
-//     `${msg} Your score is ${scoreBoard.playerScore}. My score is ${scoreBoard.compScore}.`
-//   );
-
-//   console.log("SCOREBOARD:", scoreBoard);
-// }
-
-// function displayGameWinner(scoreBoard) {
-//   if (scoreBoard.playerScore === END_OF_MATCH) {
-//     printMessage(MESSAGES.compWinsMatch);
-//   }
-
-//   if (scoreBoard.compScore === END_OF_MATCH) {
-//     printMessage(MESSAGES.playerWinsMatch);
-//   }
-// }
-
-// function keepPlaying(anotherGame) {
-//   let validYesOrNo = ["yes", "no"];
-
-//   printMessage(
-//     `Do you want to play again? Choose ${validYesOrNo.join(" or ")}.`
-//   );
-//   anotherGame = readline.question().toLowerCase();
-
-//   while (
-//     !validYesOrNo.includes(anotherGame) &&
-//     anotherGame !== "n" &&
-//     anotherGame !== "y"
-//   ) {
-//     printMessage("Please choose: 'yes' or 'no'.");
-//     anotherGame = readline.question().toLocaleLowerCase();
-//   }
-//   return anotherGame;
-// }
+function joinOr(array, delimiter = ", ", word = "or") {
+  if (array.length === 0) {
+    return "";
+  } else if (array.length === 1) {
+    return `${array[0]}`;
+  } else if (array.length === 2) {
+    return `${array[0]} ${word} ${array[1]}`;
+  } else {
+    let arrCopy = array.slice();
+    arrCopy.pop();
+    return `${arrCopy.join(delimiter)}${delimiter}${word} ${
+      array[array.length - 1]
+    }`;
+  }
+}
