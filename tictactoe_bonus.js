@@ -19,18 +19,17 @@ const COMPUTER_MARKER = "O";
 function startTicTacToe() {
   greeting();
 
-  //while (true) {
-  let board = initializeBoard();
+  let anotherGame = "y";
 
-  mainGameLoop(board);
+  while (anotherGame[0] === "y") {
+    let board = initializeBoard();
 
-  printWinner(board);
+    mainGameLoop(board);
 
-  //   printMessage("Play again?");
-  //   let answer = readline.question().toLowerCase()[0];
-  //   if (answer !== "y") break;
-  // }
+    printWinner(board);
 
+    anotherGame = keepPlaying(anotherGame);
+  }
   farewell();
 }
 
@@ -149,6 +148,25 @@ function printWinner(board) {
   } else {
     printMessage("It's a tie!");
   }
+}
+
+function keepPlaying(anotherGame) {
+  let validYesOrNo = ["yes", "no"];
+
+  printMessage(
+    `Do you want to play again? Choose ${validYesOrNo.join(" or ")}.`
+  );
+  anotherGame = readline.question().toLowerCase();
+
+  while (
+    !validYesOrNo.includes(anotherGame) &&
+    anotherGame !== "n" &&
+    anotherGame !== "y"
+  ) {
+    printMessage("Please choose: 'yes' or 'no'.");
+    anotherGame = readline.question().toLocaleLowerCase();
+  }
+  return anotherGame;
 }
 
 function greeting() {

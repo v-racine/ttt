@@ -132,6 +132,8 @@ while (true) {
 
 prompt("Thanks for playing Tic Tac Toe!");
 
+//added function:
+
 function joinOr(array, delimiter = ", ", word = "or") {
   if (array.length === 0) {
     return "";
