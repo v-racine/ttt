@@ -121,28 +121,31 @@ function findRiskySquare(line, board, marker) {
 function computerChoosesSquare(board) {
   let square;
 
-  //defensive strategy
+  //offensive strategy
   for (let i = 0; i < WINNING_LINES.length; i++) {
     let line = WINNING_LINES[i];
-    square = findRiskySquare(line, board, HUMAN_MARKER);
+    square = findRiskySquare(line, board, COMPUTER_MARKER);
     if (square) break;
   }
 
-  //offensive strategy
+  //defensive strategy
   if (!square) {
     for (let i = 0; i < WINNING_LINES.length; i++) {
       let line = WINNING_LINES[i];
-      square = findRiskySquare(line, board, COMPUTER_MARKER);
+      square = findRiskySquare(line, board, HUMAN_MARKER);
       if (square) break;
     }
   }
 
-  //random pick
+  //pick square #5 (if available) or random pick
   if (!square) {
-    let randomIndex = Math.floor(Math.random() * emptySquares(board).length);
-    square = emptySquares(board)[randomIndex];
+    if (board["5"] === EMPTY_MARKER) {
+      board["5"] = COMPUTER_MARKER;
+    } else {
+      let randomIndex = Math.floor(Math.random() * emptySquares(board).length);
+      square = emptySquares(board)[randomIndex];
+    }
   }
-
   board[square] = COMPUTER_MARKER;
 }
 
@@ -177,6 +180,7 @@ function detectWinner(board) {
 }
 
 function printWinner(board) {
+  displayBoard(board);
   if (someoneWon(board)) {
     printMessage(`${detectWinner(board)} won!`);
   } else {
