@@ -105,9 +105,34 @@ function playerChoosesSquare(board) {
   board[square] = HUMAN_MARKER;
 }
 
+function findRiskySquare(line, board) {
+  let markersInLine = line.map((square) => board[square]);
+  let filteredMarkers = markersInLine.filter(
+    (marker) => marker === HUMAN_MARKER
+  );
+
+  if (filteredMarkers.length === 2) {
+    let emptySquare = line.find((square) => board[square] === EMPTY_MARKER);
+    if (emptySquare !== undefined) {
+      return emptySquare;
+    }
+  }
+  return null;
+}
+
 function computerChoosesSquare(board) {
-  let randomIndex = Math.floor(Math.random() * emptySquares(board).length);
-  let square = emptySquares(board)[randomIndex];
+  let square;
+  for (let i = 0; i < WINNING_LINES.length; i++) {
+    let line = WINNING_LINES[i];
+    square = findRiskySquare(line, board);
+    if (square) break;
+  }
+
+  if (!square) {
+    let randomIndex = Math.floor(Math.random() * emptySquares(board).length);
+    square = emptySquares(board)[randomIndex];
+  }
+
   board[square] = COMPUTER_MARKER;
 }
 
@@ -138,19 +163,6 @@ function detectWinner(board) {
     }
   }
 
-  return null;
-}
-
-function findRiskySquare(line, board) {
-  let markersInLine = line.map((square) => board[square]);
-  let filteredMarkers = markersInLine.filter((marker) => marker === "X");
-
-  if (filteredMarkers.length === 2) {
-    let emptySquare = line.find((square) => board[square] === " ");
-    if (emptySquare !== undefined) {
-      return emptySquare;
-    }
-  }
   return null;
 }
 
