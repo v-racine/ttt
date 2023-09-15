@@ -105,11 +105,9 @@ function playerChoosesSquare(board) {
   board[square] = HUMAN_MARKER;
 }
 
-function findRiskySquare(line, board) {
+function findRiskySquare(line, board, marker) {
   let markersInLine = line.map((square) => board[square]);
-  let filteredMarkers = markersInLine.filter(
-    (marker) => marker === HUMAN_MARKER
-  );
+  let filteredMarkers = markersInLine.filter((mark) => mark === marker);
 
   if (filteredMarkers.length === 2) {
     let emptySquare = line.find((square) => board[square] === EMPTY_MARKER);
@@ -122,12 +120,24 @@ function findRiskySquare(line, board) {
 
 function computerChoosesSquare(board) {
   let square;
+
+  //defensive strategy
   for (let i = 0; i < WINNING_LINES.length; i++) {
     let line = WINNING_LINES[i];
-    square = findRiskySquare(line, board);
+    square = findRiskySquare(line, board, HUMAN_MARKER);
     if (square) break;
   }
 
+  //offensive strategy
+  if (!square) {
+    for (let i = 0; i < WINNING_LINES.length; i++) {
+      let line = WINNING_LINES[i];
+      square = findRiskySquare(line, board, COMPUTER_MARKER);
+      if (square) break;
+    }
+  }
+
+  //random pick
   if (!square) {
     let randomIndex = Math.floor(Math.random() * emptySquares(board).length);
     square = emptySquares(board)[randomIndex];
