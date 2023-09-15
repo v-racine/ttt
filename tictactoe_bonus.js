@@ -38,19 +38,19 @@ function getFirstMove() {
   printMessage("Who gets the first turn? me or you?");
   //printMessage(`(${FIRST_MOVE[0]}) or ` + `(${FIRST_MOVE[1]})`);
 
-  let initialPlayer = readline.question().toLowerCase();
+  let firstPlayer = readline.question().toLowerCase();
 
   while (
-    !FIRST_MOVE[0].includes(initialPlayer) &&
-    !FIRST_MOVE[1].includes(initialPlayer)
+    !FIRST_MOVE[0].includes(firstPlayer) &&
+    !FIRST_MOVE[1].includes(firstPlayer)
   ) {
     printMessage("Wait, what? Try again: 'me' or 'you'?");
-    initialPlayer = readline.question().toLowerCase();
+    firstPlayer = readline.question().toLowerCase();
   }
 
-  if (FIRST_MOVE[0].includes(initialPlayer)) return playerIsStarter;
+  if (FIRST_MOVE[0].includes(firstPlayer)) return playerIsStarter;
 
-  if (FIRST_MOVE[1].includes(initialPlayer)) return computerIsStarter;
+  if (FIRST_MOVE[1].includes(firstPlayer)) return computerIsStarter;
 }
 
 function startTicTacToe() {
@@ -104,9 +104,11 @@ function displayBoard(board) {
   console.log("");
 }
 
-function mainGameLoop(board, initialPlayer) {
+function mainGameLoop(board, firstPlayer) {
   while (true) {
-    if (initialPlayer === COMPUTER) {
+    displayBoard(board);
+
+    if (firstPlayer === COMPUTER) {
       computerChoosesSquare(board);
       if (someoneWon(board) || boardFull(board)) break;
     }
@@ -116,7 +118,7 @@ function mainGameLoop(board, initialPlayer) {
     playerChoosesSquare(board);
     if (someoneWon(board) || boardFull(board)) break;
 
-    if (initialPlayer === PLAYER) {
+    if (firstPlayer === PLAYER) {
       computerChoosesSquare(board);
       if (someoneWon(board) || boardFull(board)) break;
     }
