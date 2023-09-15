@@ -1,9 +1,19 @@
 const readline = require("readline-sync");
 const { joinOr } = require("./joinOr");
 
-const INITIAL_MARKER = " ";
+const EMPTY_MARKER = " ";
 const HUMAN_MARKER = "X";
 const COMPUTER_MARKER = "O";
+const WINNING_LINES = [
+  [1, 2, 3],
+  [4, 5, 6],
+  [7, 8, 9], // rows
+  [1, 4, 7],
+  [2, 5, 8],
+  [3, 6, 9], // columns
+  [1, 5, 9],
+  [3, 5, 7], // diagonals
+];
 //const END_OF_MATCH = 5;
 
 // const MESSAGES = {
@@ -24,7 +34,7 @@ function startTicTacToe() {
   while (anotherGame[0] === "y") {
     let board = initializeBoard();
 
-    mainGameLoop(board);
+    mainGameLoop(board); // meh m mouton, please stop calling someoneWon a million times
 
     printWinner(board);
 
@@ -41,7 +51,7 @@ function initializeBoard() {
   let board = {};
 
   for (let square = 1; square <= 9; square++) {
-    board[String(square)] = INITIAL_MARKER;
+    board[String(square)] = EMPTY_MARKER;
   }
 
   return board;
@@ -78,7 +88,7 @@ function mainGameLoop(board) {
 }
 
 function emptySquares(board) {
-  return Object.keys(board).filter((key) => board[key] === " ");
+  return Object.keys(board).filter((key) => board[key] === EMPTY_MARKER);
 }
 
 function playerChoosesSquare(board) {
@@ -95,9 +105,34 @@ function playerChoosesSquare(board) {
   board[square] = HUMAN_MARKER;
 }
 
+function findRiskySquare(line, board) {
+  let markersInLine = line.map((square) => board[square]);
+  let filteredMarkers = markersInLine.filter(
+    (marker) => marker === HUMAN_MARKER
+  );
+
+  if (filteredMarkers.length === 2) {
+    let emptySquare = line.find((square) => board[square] === EMPTY_MARKER);
+    if (emptySquare !== undefined) {
+      return emptySquare;
+    }
+  }
+  return null;
+}
+
 function computerChoosesSquare(board) {
-  let randomIndex = Math.floor(Math.random() * emptySquares(board).length);
-  let square = emptySquares(board)[randomIndex];
+  let square;
+  for (let i = 0; i < WINNING_LINES.length; i++) {
+    let line = WINNING_LINES[i];
+    square = findRiskySquare(line, board);
+    if (square) break;
+  }
+
+  if (!square) {
+    let randomIndex = Math.floor(Math.random() * emptySquares(board).length);
+    square = emptySquares(board)[randomIndex];
+  }
+
   board[square] = COMPUTER_MARKER;
 }
 
@@ -110,19 +145,8 @@ function someoneWon(board) {
 }
 
 function detectWinner(board) {
-  let winningLines = [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9], // rows
-    [1, 4, 7],
-    [2, 5, 8],
-    [3, 6, 9], // columns
-    [1, 5, 9],
-    [3, 5, 7], // diagonals
-  ];
-
-  for (let line = 0; line < winningLines.length; line++) {
-    let [sq1, sq2, sq3] = winningLines[line];
+  for (let line = 0; line < WINNING_LINES.length; line++) {
+    let [sq1, sq2, sq3] = WINNING_LINES[line];
 
     if (
       board[sq1] === HUMAN_MARKER &&
