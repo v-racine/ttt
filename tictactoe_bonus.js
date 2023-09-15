@@ -14,6 +14,11 @@ const WINNING_LINES = [
   [1, 5, 9],
   [3, 5, 7], // diagonals
 ];
+
+const FIRST_MOVE = ["me", "you"];
+const PLAYER = "me";
+const COMPUTER = "you";
+
 //const END_OF_MATCH = 5;
 
 // const MESSAGES = {
@@ -26,15 +31,39 @@ const WINNING_LINES = [
 
 //main function
 
+function getFirstMove() {
+  let playerIsStarter = PLAYER;
+  let computerIsStarter = COMPUTER;
+
+  printMessage("Who gets the first turn? me or you?");
+  //printMessage(`(${FIRST_MOVE[0]}) or ` + `(${FIRST_MOVE[1]})`);
+
+  let initialPlayer = readline.question().toLowerCase();
+
+  while (
+    !FIRST_MOVE[0].includes(initialPlayer) &&
+    !FIRST_MOVE[1].includes(initialPlayer)
+  ) {
+    printMessage("Wait, what? Try again: 'me' or 'you'?");
+    initialPlayer = readline.question().toLowerCase();
+  }
+
+  if (FIRST_MOVE[0].includes(initialPlayer)) return playerIsStarter;
+
+  if (FIRST_MOVE[1].includes(initialPlayer)) return computerIsStarter;
+}
+
 function startTicTacToe() {
   greeting();
+
+  let initialPlayer = getFirstMove();
 
   let anotherGame = "y";
 
   while (anotherGame[0] === "y") {
     let board = initializeBoard();
 
-    mainGameLoop(board); // meh m mouton, please stop calling someoneWon a million times
+    mainGameLoop(board, initialPlayer); // meh m mouton, please stop calling someoneWon a million times
 
     printWinner(board);
 
@@ -75,15 +104,22 @@ function displayBoard(board) {
   console.log("");
 }
 
-function mainGameLoop(board) {
+function mainGameLoop(board, initialPlayer) {
   while (true) {
+    if (initialPlayer === COMPUTER) {
+      computerChoosesSquare(board);
+      if (someoneWon(board) || boardFull(board)) break;
+    }
+
     displayBoard(board);
 
     playerChoosesSquare(board);
     if (someoneWon(board) || boardFull(board)) break;
 
-    computerChoosesSquare(board);
-    if (someoneWon(board) || boardFull(board)) break;
+    if (initialPlayer === PLAYER) {
+      computerChoosesSquare(board);
+      if (someoneWon(board) || boardFull(board)) break;
+    }
   }
 }
 
