@@ -35,21 +35,20 @@ function getFirstMove() {
   let playerIsStarter = PLAYER;
   let computerIsStarter = COMPUTER;
 
-  printMessage("Who gets the first turn? me or you?");
-  //printMessage(`(${FIRST_MOVE[0]}) or ` + `(${FIRST_MOVE[1]})`);
+  printMessage(`Who gets the first turn? ${FIRST_MOVE.join(" or ")}?`);
 
   let firstPlayer = readline.question().toLowerCase();
 
   while (
-    !FIRST_MOVE[0].includes(firstPlayer) &&
-    !FIRST_MOVE[1].includes(firstPlayer)
+    !FIRST_MOVE.includes(firstPlayer) &&
+    firstPlayer !== "m" &&
+    firstPlayer !== "y"
   ) {
-    printMessage("Wait, what? Try again: 'me' or 'you'?");
-    firstPlayer = readline.question().toLowerCase();
+    printMessage("Please choose: 'me' or 'you'.");
+    firstPlayer = readline.question().toLocaleLowerCase();
   }
 
   if (FIRST_MOVE[0].includes(firstPlayer)) return playerIsStarter;
-
   if (FIRST_MOVE[1].includes(firstPlayer)) return computerIsStarter;
 }
 
@@ -106,7 +105,7 @@ function displayBoard(board) {
 
 function mainGameLoop(board, firstPlayer) {
   while (true) {
-    displayBoard(board);
+    //displayBoard(board);
 
     if (firstPlayer === COMPUTER) {
       computerChoosesSquare(board);
@@ -246,7 +245,7 @@ function keepPlaying(anotherGame) {
 }
 
 function greeting() {
-  printMessage("Welcome to the game of 'Tic-Tac-Toe'! Let's play!!");
+  printMessage("Welcome to the game of Tic-Tac-Toe! Let's play!!");
 }
 
 function farewell() {
