@@ -19,38 +19,17 @@ const FIRST_MOVE = ["me", "you"];
 const PLAYER = "me";
 const COMPUTER = "you";
 
-//const END_OF_MATCH = 5;
+const END_OF_TOURNAMENT = 5;
 
-// const MESSAGES = {
-//   playerWinsGame: "You win this game!",
-//   compWinsGame: "I win this game!",
-//   tieMsg: "It's a tie!",
-//   playerWinsMatch: "You win the match!",
-//   compWinsMatch: "I win the match!",
-// };
+const MESSAGES = {
+  playerWinsRound: "You win this game!",
+  compWinsRound: "I win this game!",
+  tieMsg: "It's a tie!",
+  playerWinsGame: "You win the match!",
+  compWinsGame: "I win the match!",
+};
 
 //main function
-
-function getFirstMove() {
-  let playerIsStarter = PLAYER;
-  let computerIsStarter = COMPUTER;
-
-  printMessage(`Who gets the first turn? ${FIRST_MOVE.join(" or ")}?`);
-
-  let firstPlayer = readline.question().toLowerCase();
-
-  while (
-    !FIRST_MOVE.includes(firstPlayer) &&
-    firstPlayer !== "m" &&
-    firstPlayer !== "y"
-  ) {
-    printMessage("Please choose: 'me' or 'you'.");
-    firstPlayer = readline.question().toLocaleLowerCase();
-  }
-
-  if (FIRST_MOVE[0].includes(firstPlayer)) return playerIsStarter;
-  if (FIRST_MOVE[1].includes(firstPlayer)) return computerIsStarter;
-}
 
 function startTicTacToe() {
   greeting();
@@ -72,6 +51,27 @@ function startTicTacToe() {
 }
 
 startTicTacToe();
+
+function getFirstMove() {
+  let playerIsStarter = PLAYER;
+  let computerIsStarter = COMPUTER;
+
+  printMessage(`Who shall get the first turn? ${FIRST_MOVE.join(" or ")}?`);
+
+  let firstPlayer = readline.question().toLowerCase();
+
+  while (
+    !FIRST_MOVE.includes(firstPlayer) &&
+    firstPlayer !== "m" &&
+    firstPlayer !== "y"
+  ) {
+    printMessage("Please choose: 'me' or 'you'.");
+    firstPlayer = readline.question().toLocaleLowerCase();
+  }
+
+  if (FIRST_MOVE[0].includes(firstPlayer)) return playerIsStarter;
+  if (FIRST_MOVE[1].includes(firstPlayer)) return computerIsStarter;
+}
 
 //helper functions
 
@@ -245,7 +245,9 @@ function keepPlaying(anotherGame) {
 }
 
 function greeting() {
-  printMessage("Welcome to the game of Tic-Tac-Toe! Let's play!!");
+  printMessage(
+    "Welcome to the game of Tic-Tac-Toe! Let's play a Best-of-Five tournament!!"
+  );
 }
 
 function farewell() {
