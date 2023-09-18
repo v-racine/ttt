@@ -40,11 +40,12 @@ function startTicTacToe() {
   let anotherGame = "y";
 
   while (anotherGame[0] === "y") {
-    let initialPlayer = getFirstMove();
+    // let initialPlayer = getFirstMove();
     let board = initializeBoard();
 
-    const winner = mainGameLoop(board, initialPlayer); // meh m mouton, please stop calling someoneWon a million times
-    printWinner(board, winner);
+    // const winner = mainGameLoop(board, initialPlayer);
+    // printWinner(board, winner);
+    playTournament(board);
 
     anotherGame = keepPlaying(anotherGame);
     // console.clear();
@@ -59,6 +60,49 @@ startTicTacToe();
 //helper functions:
 
 //to play best-of five tournament
+function playTournament(board) {
+  let initialPlayer = getFirstMove();
+
+  while (
+    SCOREBOARD.playerScore !== END_OF_TOURNAMENT &&
+    SCOREBOARD.compScore !== END_OF_TOURNAMENT
+  ) {
+    const winner = mainGameLoop(board, initialPlayer);
+    //printWinner(board, winner);
+
+    scoreTracker(winner, SCOREBOARD);
+    displayScores(SCOREBOARD, winner);
+    displayTournamentWinner(SCOREBOARD);
+  }
+
+  console.clear();
+  SCOREBOARD.playerScore = 0;
+  SCOREBOARD.compScore = 0;
+}
+
+function scoreTracker(winner, SCOREBOARD) {
+  if (winner === "You") {
+    SCOREBOARD.playerScore++;
+  } else if (winner === "I") {
+    SCOREBOARD.compScore++;
+  }
+}
+
+function displayScores(SCOREBOARD, msg) {
+  printMessage(
+    `(${msg}) Your score is ${SCOREBOARD.playerScore}. My score is ${SCOREBOARD.compScore}.`
+  );
+  console.log("SCOREBOARD:", SCOREBOARD);
+}
+
+function displayTournamentWinner(SCOREBOARD) {
+  if (SCOREBOARD.playerScore === END_OF_TOURNAMENT) {
+    printMessage("You win the game!");
+  }
+  if (SCOREBOARD.compScore === END_OF_TOURNAMENT) {
+    printMessage("I win the game!");
+  }
+}
 
 //to determine & validate who gets the first move
 function getFirstMove() {
@@ -241,7 +285,7 @@ function emptySquares(board) {
 function printWinner(board, winner) {
   displayBoard(board);
   if (winner) {
-    printMessage(`${winner} won this game!`);
+    printMessage(`${winner} won this round!`);
   } else {
     printMessage("It's a tie!");
   }
