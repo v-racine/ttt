@@ -19,23 +19,50 @@ const FIRST_MOVE = ["me", "you"];
 const PLAYER = "me";
 const COMPUTER = "you";
 
-//const END_OF_MATCH = 5;
+const END_OF_TOURNAMENT = 5;
 
-// const MESSAGES = {
-//   playerWinsGame: "You win this game!",
-//   compWinsGame: "I win this game!",
-//   tieMsg: "It's a tie!",
-//   playerWinsMatch: "You win the match!",
-//   compWinsMatch: "I win the match!",
-// };
+const MESSAGES = {
+  playerWinsRound: "You win this game!",
+  compWinsRound: "I win this game!",
+  tieMsg: "It's a tie!",
+  playerWinsGame: "You win the match!",
+  compWinsGame: "I win the match!",
+};
 
 //main function
+
+//const winner = detectWinner(board);
+
+function startTicTacToe() {
+  greeting();
+
+  //let initialPlayer = getFirstMove();
+  // const scoreBoard = { playerScore: 0, compScore: 0 };
+
+  let anotherGame = "y";
+
+  while (anotherGame[0] === "y") {
+    let initialPlayer = getFirstMove();
+    let board = initializeBoard();
+
+    const winner = mainGameLoop(board, initialPlayer); // meh m mouton, please stop calling someoneWon a million times
+    printWinner(board, winner);
+
+    anotherGame = keepPlaying(anotherGame);
+    // console.clear();
+    // scoreBoard.playerScore = 0;
+    // scoreBoard.compScore = 0;
+  }
+  farewell();
+}
+
+startTicTacToe();
 
 function getFirstMove() {
   let playerIsStarter = PLAYER;
   let computerIsStarter = COMPUTER;
 
-  printMessage(`Who gets the first turn? ${FIRST_MOVE.join(" or ")}?`);
+  printMessage(`Who shall get the first turn? ${FIRST_MOVE.join(" or ")}?`);
 
   let firstPlayer = readline.question().toLowerCase();
 
@@ -51,27 +78,6 @@ function getFirstMove() {
   if (FIRST_MOVE[0].includes(firstPlayer)) return playerIsStarter;
   if (FIRST_MOVE[1].includes(firstPlayer)) return computerIsStarter;
 }
-
-function startTicTacToe() {
-  greeting();
-
-  let initialPlayer = getFirstMove();
-
-  let anotherGame = "y";
-
-  while (anotherGame[0] === "y") {
-    let board = initializeBoard();
-
-    mainGameLoop(board, initialPlayer); // meh m mouton, please stop calling someoneWon a million times
-
-    printWinner(board);
-
-    anotherGame = keepPlaying(anotherGame);
-  }
-  farewell();
-}
-
-startTicTacToe();
 
 //helper functions
 
@@ -104,24 +110,35 @@ function displayBoard(board) {
 }
 
 function mainGameLoop(board, firstPlayer) {
+  let winner;
   while (true) {
     //displayBoard(board);
 
     if (firstPlayer === COMPUTER) {
       computerChoosesSquare(board);
-      if (someoneWon(board) || boardFull(board)) break;
+      winner = detectWinner(board);
+      if (winner || boardFull(board)) {
+        break;
+      }
     }
 
     displayBoard(board);
 
     playerChoosesSquare(board);
-    if (someoneWon(board) || boardFull(board)) break;
+    winner = detectWinner(board);
+    if (winner || boardFull(board)) {
+      break;
+    }
 
     if (firstPlayer === PLAYER) {
       computerChoosesSquare(board);
-      if (someoneWon(board) || boardFull(board)) break;
+      winner = detectWinner(board);
+      if (winner || boardFull(board)) {
+        break;
+      }
     }
   }
+  return winner;
 }
 
 function emptySquares(board) {
@@ -190,9 +207,9 @@ function boardFull(board) {
   return emptySquares(board).length === 0;
 }
 
-function someoneWon(board) {
-  return !!detectWinner(board);
-}
+// function someoneWon(board) {
+//   return !!detectWinner(board);
+// }
 
 function detectWinner(board) {
   for (let line = 0; line < WINNING_LINES.length; line++) {
@@ -214,12 +231,12 @@ function detectWinner(board) {
   }
 
   return null;
-}
+} //winner
 
-function printWinner(board) {
+function printWinner(board, winner) {
   displayBoard(board);
-  if (someoneWon(board)) {
-    printMessage(`${detectWinner(board)} won!`);
+  if (winner) {
+    printMessage(`${winner} won!`);
   } else {
     printMessage("It's a tie!");
   }
@@ -245,7 +262,9 @@ function keepPlaying(anotherGame) {
 }
 
 function greeting() {
-  printMessage("Welcome to the game of Tic-Tac-Toe! Let's play!!");
+  printMessage(
+    "Welcome to the game of Tic-Tac-Toe! Let's play a Best-of-Five tournament!!"
+  );
 }
 
 function farewell() {
