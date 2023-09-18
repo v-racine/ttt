@@ -31,21 +31,27 @@ const MESSAGES = {
 
 //main function
 
+//const winner = detectWinner(board);
+
 function startTicTacToe() {
   greeting();
 
-  let initialPlayer = getFirstMove();
+  //let initialPlayer = getFirstMove();
+  // const scoreBoard = { playerScore: 0, compScore: 0 };
 
   let anotherGame = "y";
 
   while (anotherGame[0] === "y") {
+    let initialPlayer = getFirstMove();
     let board = initializeBoard();
 
-    mainGameLoop(board, initialPlayer); // meh m mouton, please stop calling someoneWon a million times
-
-    printWinner(board);
+    const winner = mainGameLoop(board, initialPlayer); // meh m mouton, please stop calling someoneWon a million times
+    printWinner(board, winner);
 
     anotherGame = keepPlaying(anotherGame);
+    // console.clear();
+    // scoreBoard.playerScore = 0;
+    // scoreBoard.compScore = 0;
   }
   farewell();
 }
@@ -104,24 +110,35 @@ function displayBoard(board) {
 }
 
 function mainGameLoop(board, firstPlayer) {
+  let winner;
   while (true) {
     //displayBoard(board);
 
     if (firstPlayer === COMPUTER) {
       computerChoosesSquare(board);
-      if (someoneWon(board) || boardFull(board)) break;
+      winner = detectWinner(board);
+      if (winner || boardFull(board)) {
+        break;
+      }
     }
 
     displayBoard(board);
 
     playerChoosesSquare(board);
-    if (someoneWon(board) || boardFull(board)) break;
+    winner = detectWinner(board);
+    if (winner || boardFull(board)) {
+      break;
+    }
 
     if (firstPlayer === PLAYER) {
       computerChoosesSquare(board);
-      if (someoneWon(board) || boardFull(board)) break;
+      winner = detectWinner(board);
+      if (winner || boardFull(board)) {
+        break;
+      }
     }
   }
+  return winner;
 }
 
 function emptySquares(board) {
@@ -190,9 +207,9 @@ function boardFull(board) {
   return emptySquares(board).length === 0;
 }
 
-function someoneWon(board) {
-  return !!detectWinner(board);
-}
+// function someoneWon(board) {
+//   return !!detectWinner(board);
+// }
 
 function detectWinner(board) {
   for (let line = 0; line < WINNING_LINES.length; line++) {
@@ -214,12 +231,12 @@ function detectWinner(board) {
   }
 
   return null;
-}
+} //winner
 
-function printWinner(board) {
+function printWinner(board, winner) {
   displayBoard(board);
-  if (someoneWon(board)) {
-    printMessage(`${detectWinner(board)} won!`);
+  if (winner) {
+    printMessage(`${winner} won!`);
   } else {
     printMessage("It's a tie!");
   }
