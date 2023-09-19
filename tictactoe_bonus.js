@@ -32,7 +32,7 @@ function playTicTacToeTournament() {
       const winner = mainGameLoop(board, initialPlayer);
 
       scoreTracker(winner, SCOREBOARD);
-      printWinner(board, winner);
+      displayRoundWinner(board, winner);
       displayScores(SCOREBOARD);
       displayTournamentWinner(SCOREBOARD);
     }
@@ -101,21 +101,6 @@ function getFirstMove() {
   if (FIRST_MOVE[1].includes(firstPlayer)) return computerIsStarter;
 }
 
-//determines & validates player's move
-function playerChoosesSquare(board) {
-  let square;
-
-  while (true) {
-    printMessage(`Choose a square: ${joinOr(emptySquares(board))}`);
-    square = readline.question().trim();
-    if (emptySquares(board).includes(square)) break;
-
-    printMessage("Sorry, that's not a valid choice.");
-  }
-
-  board[square] = HUMAN_MARKER;
-}
-
 //plays one round of tic-tac-toe
 function mainGameLoop(board, firstPlayer) {
   let winner;
@@ -147,6 +132,21 @@ function mainGameLoop(board, firstPlayer) {
   return winner;
 }
 
+//determines & validates player's move
+function playerChoosesSquare(board) {
+  let square;
+
+  while (true) {
+    printMessage(`Choose a square: ${joinOr(emptySquares(board))}`);
+    square = readline.question().trim();
+    if (emptySquares(board).includes(square)) break;
+
+    printMessage("Sorry, that's not a valid choice.");
+  }
+
+  return (board[square] = HUMAN_MARKER);
+}
+
 //determines computer's move
 function computerChoosesSquare(board) {
   let square;
@@ -176,7 +176,8 @@ function computerChoosesSquare(board) {
       square = emptySquares(board)[randomIndex];
     }
   }
-  board[square] = COMPUTER_MARKER;
+
+  return (board[square] = COMPUTER_MARKER);
 }
 
 //helper for defensive moves
@@ -227,7 +228,7 @@ function emptySquares(board) {
 }
 
 //displays the result of one round (winner or tie)
-function printWinner(board, winner) {
+function displayRoundWinner(board, winner) {
   displayBoard(board);
   if (winner) {
     printMessage(`${winner} won this round!`);
