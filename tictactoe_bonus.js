@@ -1,35 +1,33 @@
 const readline = require("readline-sync");
 const { joinOr } = require("./joinOr");
+const {
+  EMPTY_MARKER,
+  HUMAN_MARKER,
+  COMPUTER_MARKER,
+  WINNING_LINES,
+  FIRST_MOVE,
+  PLAYER,
+  COMPUTER,
+  END_OF_TOURNAMENT,
+} = require("./constants");
 
-const EMPTY_MARKER = " ";
-const HUMAN_MARKER = "X";
-const COMPUTER_MARKER = "O";
-const WINNING_LINES = [
-  [1, 2, 3],
-  [4, 5, 6],
-  [7, 8, 9], // rows
-  [1, 4, 7],
-  [2, 5, 8],
-  [3, 6, 9], // columns
-  [1, 5, 9],
-  [3, 5, 7], // diagonals
-];
-
-const FIRST_MOVE = ["me", "you"];
-const PLAYER = "me";
-const COMPUTER = "you";
-
-const END_OF_TOURNAMENT = 3;
-
-//const MESSAGES = {
-//   playerWinsRound: "You win this game!",
-//   compWinsRound: "I win this game!",
-//   tieMsg: "It's a tie!",
-//   playerWinsGame: "You win the match!",
-//   compWinsGame: "I win the match!",
-// };
-
-// const SCOREBOARD = { playerScore: 0, compScore: 0 };
+// const EMPTY_MARKER = " ";
+// const HUMAN_MARKER = "X";
+// const COMPUTER_MARKER = "O";
+// const WINNING_LINES = [
+//   [1, 2, 3],
+//   [4, 5, 6],
+//   [7, 8, 9],
+//   [1, 4, 7],
+//   [2, 5, 8],
+//   [3, 6, 9],
+//   [1, 5, 9],
+//   [3, 5, 7],
+// ];
+// const FIRST_MOVE = ["me", "you"];
+// const PLAYER = "me";
+// const COMPUTER = "you";
+// const END_OF_TOURNAMENT = 3;
 
 //main function
 
@@ -155,7 +153,7 @@ function initializeBoard() {
 
 //to display board
 function displayBoard(board) {
-  console.log(`You are ${HUMAN_MARKER}. Computer is ${COMPUTER_MARKER}.`);
+  console.log(`You are ${HUMAN_MARKER}. I am ${COMPUTER_MARKER}.`);
 
   console.log("");
   console.log("     |     |");
