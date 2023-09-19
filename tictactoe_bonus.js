@@ -19,7 +19,7 @@ const FIRST_MOVE = ["me", "you"];
 const PLAYER = "me";
 const COMPUTER = "you";
 
-const END_OF_TOURNAMENT = 5;
+const END_OF_TOURNAMENT = 3;
 
 //const MESSAGES = {
 //   playerWinsRound: "You win this game!",
@@ -29,56 +29,72 @@ const END_OF_TOURNAMENT = 5;
 //   compWinsGame: "I win the match!",
 // };
 
-const SCOREBOARD = { playerScore: 0, compScore: 0 };
+// const SCOREBOARD = { playerScore: 0, compScore: 0 };
 
 //main function
 
-function startTicTacToe() {
+// function startTicTacToe() {
+//   greeting();
+
+//   // let initialPlayer = getFirstMove();
+//   let anotherGame = "y";
+
+//   while (anotherGame[0] === "y") {
+//     // let initialPlayer = getFirstMove();
+//     let board = initializeBoard();
+
+//     // const winner = mainGameLoop(board, initialPlayer);
+//     // printWinner(board, winner);
+//     playTournament(board);
+
+//     anotherGame = keepPlaying(anotherGame);
+//     // console.clear();
+//     // scoreBoard.playerScore = 0;
+//     // scoreBoard.compScore = 0;
+//   }
+//   farewell();
+// }
+
+// startTicTacToe();
+
+//to play best-of five tournament
+function playTournament() {
   greeting();
 
-  // let initialPlayer = getFirstMove();
+  const SCOREBOARD = { playerScore: 0, compScore: 0 };
+
+  let initialPlayer = getFirstMove();
   let anotherGame = "y";
 
   while (anotherGame[0] === "y") {
-    // let initialPlayer = getFirstMove();
-    let board = initializeBoard();
+    // let board = initializeBoard();
 
-    // const winner = mainGameLoop(board, initialPlayer);
-    // printWinner(board, winner);
-    playTournament(board);
+    while (
+      SCOREBOARD.playerScore !== END_OF_TOURNAMENT &&
+      SCOREBOARD.compScore !== END_OF_TOURNAMENT
+    ) {
+      let board = initializeBoard();
 
+      const winner = mainGameLoop(board, initialPlayer);
+      //printWinner(board, winner);
+
+      scoreTracker(winner, SCOREBOARD);
+      printWinner(board, winner);
+      displayScores(SCOREBOARD);
+      displayTournamentWinner(SCOREBOARD);
+    }
     anotherGame = keepPlaying(anotherGame);
-    // console.clear();
-    // scoreBoard.playerScore = 0;
-    // scoreBoard.compScore = 0;
+
+    console.clear();
+    SCOREBOARD.playerScore = 0;
+    SCOREBOARD.compScore = 0;
   }
   farewell();
 }
 
-startTicTacToe();
+playTournament();
 
 //helper functions:
-
-//to play best-of five tournament
-function playTournament(board) {
-  let initialPlayer = getFirstMove();
-
-  while (
-    SCOREBOARD.playerScore !== END_OF_TOURNAMENT &&
-    SCOREBOARD.compScore !== END_OF_TOURNAMENT
-  ) {
-    const winner = mainGameLoop(board, initialPlayer);
-    //printWinner(board, winner);
-
-    scoreTracker(winner, SCOREBOARD);
-    displayScores(SCOREBOARD, winner);
-    displayTournamentWinner(SCOREBOARD);
-  }
-
-  console.clear();
-  SCOREBOARD.playerScore = 0;
-  SCOREBOARD.compScore = 0;
-}
 
 function scoreTracker(winner, SCOREBOARD) {
   if (winner === "You") {
@@ -88,9 +104,9 @@ function scoreTracker(winner, SCOREBOARD) {
   }
 }
 
-function displayScores(SCOREBOARD, msg) {
+function displayScores(SCOREBOARD) {
   printMessage(
-    `(${msg}) Your score is ${SCOREBOARD.playerScore}. My score is ${SCOREBOARD.compScore}.`
+    `Your score is ${SCOREBOARD.playerScore}. My score is ${SCOREBOARD.compScore}.`
   );
   console.log("SCOREBOARD:", SCOREBOARD);
 }
