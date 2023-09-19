@@ -19,45 +19,108 @@ const FIRST_MOVE = ["me", "you"];
 const PLAYER = "me";
 const COMPUTER = "you";
 
-const END_OF_TOURNAMENT = 5;
+const END_OF_TOURNAMENT = 3;
 
-const MESSAGES = {
-  playerWinsRound: "You win this game!",
-  compWinsRound: "I win this game!",
-  tieMsg: "It's a tie!",
-  playerWinsGame: "You win the match!",
-  compWinsGame: "I win the match!",
-};
+//const MESSAGES = {
+//   playerWinsRound: "You win this game!",
+//   compWinsRound: "I win this game!",
+//   tieMsg: "It's a tie!",
+//   playerWinsGame: "You win the match!",
+//   compWinsGame: "I win the match!",
+// };
+
+// const SCOREBOARD = { playerScore: 0, compScore: 0 };
 
 //main function
 
-//const winner = detectWinner(board);
+// function startTicTacToe() {
+//   greeting();
 
-function startTicTacToe() {
+//   // let initialPlayer = getFirstMove();
+//   let anotherGame = "y";
+
+//   while (anotherGame[0] === "y") {
+//     // let initialPlayer = getFirstMove();
+//     let board = initializeBoard();
+
+//     // const winner = mainGameLoop(board, initialPlayer);
+//     // printWinner(board, winner);
+//     playTournament(board);
+
+//     anotherGame = keepPlaying(anotherGame);
+//     // console.clear();
+//     // scoreBoard.playerScore = 0;
+//     // scoreBoard.compScore = 0;
+//   }
+//   farewell();
+// }
+
+// startTicTacToe();
+
+//to play best-of five tournament
+function playTournament() {
   greeting();
 
-  //let initialPlayer = getFirstMove();
-  // const scoreBoard = { playerScore: 0, compScore: 0 };
+  const SCOREBOARD = { playerScore: 0, compScore: 0 };
 
+  let initialPlayer = getFirstMove();
   let anotherGame = "y";
 
   while (anotherGame[0] === "y") {
-    let initialPlayer = getFirstMove();
-    let board = initializeBoard();
+    // let board = initializeBoard();
 
-    const winner = mainGameLoop(board, initialPlayer); // meh m mouton, please stop calling someoneWon a million times
-    printWinner(board, winner);
+    while (
+      SCOREBOARD.playerScore !== END_OF_TOURNAMENT &&
+      SCOREBOARD.compScore !== END_OF_TOURNAMENT
+    ) {
+      let board = initializeBoard();
 
+      const winner = mainGameLoop(board, initialPlayer);
+      //printWinner(board, winner);
+
+      scoreTracker(winner, SCOREBOARD);
+      printWinner(board, winner);
+      displayScores(SCOREBOARD);
+      displayTournamentWinner(SCOREBOARD);
+    }
     anotherGame = keepPlaying(anotherGame);
-    // console.clear();
-    // scoreBoard.playerScore = 0;
-    // scoreBoard.compScore = 0;
+
+    console.clear();
+    SCOREBOARD.playerScore = 0;
+    SCOREBOARD.compScore = 0;
   }
   farewell();
 }
 
-startTicTacToe();
+playTournament();
 
+//helper functions:
+
+function scoreTracker(winner, SCOREBOARD) {
+  if (winner === "You") {
+    SCOREBOARD.playerScore++;
+  } else if (winner === "I") {
+    SCOREBOARD.compScore++;
+  }
+}
+
+function displayScores(SCOREBOARD) {
+  printMessage(
+    `Your score is ${SCOREBOARD.playerScore}. My score is ${SCOREBOARD.compScore}.`
+  );
+  console.log("SCOREBOARD:", SCOREBOARD);
+}
+
+function displayTournamentWinner(SCOREBOARD) {
+  if (SCOREBOARD.playerScore === END_OF_TOURNAMENT) {
+    printMessage("You win the game!");
+  }
+  if (SCOREBOARD.compScore === END_OF_TOURNAMENT) {
+    printMessage("I win the game!");
+  }
+}
+
+//to determine & validate who gets the first move
 function getFirstMove() {
   let playerIsStarter = PLAYER;
   let computerIsStarter = COMPUTER;
@@ -79,8 +142,7 @@ function getFirstMove() {
   if (FIRST_MOVE[1].includes(firstPlayer)) return computerIsStarter;
 }
 
-//helper functions
-
+//to create board
 function initializeBoard() {
   let board = {};
 
@@ -91,6 +153,7 @@ function initializeBoard() {
   return board;
 }
 
+//to display board
 function displayBoard(board) {
   console.log(`You are ${HUMAN_MARKER}. Computer is ${COMPUTER_MARKER}.`);
 
@@ -109,11 +172,10 @@ function displayBoard(board) {
   console.log("");
 }
 
+//to play one round
 function mainGameLoop(board, firstPlayer) {
   let winner;
   while (true) {
-    //displayBoard(board);
-
     if (firstPlayer === COMPUTER) {
       computerChoosesSquare(board);
       winner = detectWinner(board);
@@ -141,10 +203,7 @@ function mainGameLoop(board, firstPlayer) {
   return winner;
 }
 
-function emptySquares(board) {
-  return Object.keys(board).filter((key) => board[key] === EMPTY_MARKER);
-}
-
+//to get & validate player's choice
 function playerChoosesSquare(board) {
   let square;
 
@@ -159,19 +218,7 @@ function playerChoosesSquare(board) {
   board[square] = HUMAN_MARKER;
 }
 
-function findRiskySquare(line, board, marker) {
-  let markersInLine = line.map((square) => board[square]);
-  let filteredMarkers = markersInLine.filter((mark) => mark === marker);
-
-  if (filteredMarkers.length === 2) {
-    let emptySquare = line.find((square) => board[square] === EMPTY_MARKER);
-    if (emptySquare !== undefined) {
-      return emptySquare;
-    }
-  }
-  return null;
-}
-
+//to get computer's choice
 function computerChoosesSquare(board) {
   let square;
 
@@ -203,14 +250,21 @@ function computerChoosesSquare(board) {
   board[square] = COMPUTER_MARKER;
 }
 
-function boardFull(board) {
-  return emptySquares(board).length === 0;
+//to play defense
+function findRiskySquare(line, board, marker) {
+  let markersInLine = line.map((square) => board[square]);
+  let filteredMarkers = markersInLine.filter((mark) => mark === marker);
+
+  if (filteredMarkers.length === 2) {
+    let emptySquare = line.find((square) => board[square] === EMPTY_MARKER);
+    if (emptySquare !== undefined) {
+      return emptySquare;
+    }
+  }
+  return null;
 }
 
-// function someoneWon(board) {
-//   return !!detectWinner(board);
-// }
-
+//to determine a completed winning line on the board
 function detectWinner(board) {
   for (let line = 0; line < WINNING_LINES.length; line++) {
     let [sq1, sq2, sq3] = WINNING_LINES[line];
@@ -220,28 +274,40 @@ function detectWinner(board) {
       board[sq2] === HUMAN_MARKER &&
       board[sq3] === HUMAN_MARKER
     ) {
-      return "Player";
+      return "You";
     } else if (
       board[sq1] === COMPUTER_MARKER &&
       board[sq2] === COMPUTER_MARKER &&
       board[sq3] === COMPUTER_MARKER
     ) {
-      return "Computer";
+      return "I";
     }
   }
 
   return null;
-} //winner
+}
 
+//to determine when board is full (no winner)
+function boardFull(board) {
+  return emptySquares(board).length === 0;
+}
+
+//to determine when board has no more available squares
+function emptySquares(board) {
+  return Object.keys(board).filter((key) => board[key] === EMPTY_MARKER);
+}
+
+//to display the result of one round (winner or tie)
 function printWinner(board, winner) {
   displayBoard(board);
   if (winner) {
-    printMessage(`${winner} won!`);
+    printMessage(`${winner} won this round!`);
   } else {
     printMessage("It's a tie!");
   }
 }
 
+//to determine & validate playing another game
 function keepPlaying(anotherGame) {
   let validYesOrNo = ["yes", "no"];
 
@@ -261,16 +327,19 @@ function keepPlaying(anotherGame) {
   return anotherGame;
 }
 
+//to greet player
 function greeting() {
   printMessage(
     "Welcome to the game of Tic-Tac-Toe! Let's play a Best-of-Five tournament!!"
   );
 }
 
+//to say goodbye to player
 function farewell() {
   printMessage("Thanks for playing Tic-Tac-Toe! Arrivederci!!");
 }
 
+//to display messages to player
 function printMessage(message) {
   console.log(`=> ${message}`);
 }
