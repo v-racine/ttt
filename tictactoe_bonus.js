@@ -11,52 +11,9 @@ const {
   END_OF_TOURNAMENT,
 } = require("./constants");
 
-// const EMPTY_MARKER = " ";
-// const HUMAN_MARKER = "X";
-// const COMPUTER_MARKER = "O";
-// const WINNING_LINES = [
-//   [1, 2, 3],
-//   [4, 5, 6],
-//   [7, 8, 9],
-//   [1, 4, 7],
-//   [2, 5, 8],
-//   [3, 6, 9],
-//   [1, 5, 9],
-//   [3, 5, 7],
-// ];
-// const FIRST_MOVE = ["me", "you"];
-// const PLAYER = "me";
-// const COMPUTER = "you";
-// const END_OF_TOURNAMENT = 3;
+//main function - starts the best-of-five tournament
 
-//main function
-
-// function startTicTacToe() {
-//   greeting();
-
-//   // let initialPlayer = getFirstMove();
-//   let anotherGame = "y";
-
-//   while (anotherGame[0] === "y") {
-//     // let initialPlayer = getFirstMove();
-//     let board = initializeBoard();
-
-//     // const winner = mainGameLoop(board, initialPlayer);
-//     // printWinner(board, winner);
-//     playTournament(board);
-
-//     anotherGame = keepPlaying(anotherGame);
-//     // console.clear();
-//     // scoreBoard.playerScore = 0;
-//     // scoreBoard.compScore = 0;
-//   }
-//   farewell();
-// }
-
-// startTicTacToe();
-
-//to play best-of five tournament
-function playTournament() {
+function playTicTacToeTournament() {
   greeting();
 
   const SCOREBOARD = { playerScore: 0, compScore: 0 };
@@ -65,8 +22,6 @@ function playTournament() {
   let anotherGame = "y";
 
   while (anotherGame[0] === "y") {
-    // let board = initializeBoard();
-
     while (
       SCOREBOARD.playerScore !== END_OF_TOURNAMENT &&
       SCOREBOARD.compScore !== END_OF_TOURNAMENT
@@ -74,7 +29,6 @@ function playTournament() {
       let board = initializeBoard();
 
       const winner = mainGameLoop(board, initialPlayer);
-      //printWinner(board, winner);
 
       scoreTracker(winner, SCOREBOARD);
       printWinner(board, winner);
@@ -90,7 +44,7 @@ function playTournament() {
   farewell();
 }
 
-playTournament();
+playTicTacToeTournament();
 
 //helper functions:
 
