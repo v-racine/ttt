@@ -23,8 +23,8 @@ function playTicTacToeTournament() {
 
   while (anotherGame[0] === 'y') {
     while (
-      SCOREBOARD.playerScore !== END_OF_TOURNAMENT
-      && SCOREBOARD.compScore !== END_OF_TOURNAMENT
+      SCOREBOARD.playerScore !== END_OF_TOURNAMENT &&
+      SCOREBOARD.compScore !== END_OF_TOURNAMENT
     ) {
       const board = initializeBoard();
 
@@ -88,9 +88,9 @@ function getFirstMove() {
   let firstPlayer = readline.question().toLowerCase();
 
   while (
-    !FIRST_MOVE.includes(firstPlayer)
-    && firstPlayer !== 'm'
-    && firstPlayer !== 'y'
+    !FIRST_MOVE.includes(firstPlayer) &&
+    firstPlayer !== 'm' &&
+    firstPlayer !== 'y'
   ) {
     printMessage("Please choose: 'me' or 'you'.");
     firstPlayer = readline.question().toLocaleLowerCase();
@@ -202,7 +202,7 @@ function computerChoosesSquare(board) {
   (board[square] = COMPUTER_MARKER);
 }
 
-// helper for defensive moves
+// helper for `computerChoosesSquare`
 function findRiskySquare(line, board, marker) {
   const markersInLine = line.map((square) => board[square]);
   const filteredMarkers = markersInLine.filter((mark) => mark === marker);
@@ -222,17 +222,17 @@ function detectRoundWinner(board) {
     const [sq1, sq2, sq3] = WINNING_LINES[line];
 
     if (
-      board[sq1] === HUMAN_MARKER
-      && board[sq2] === HUMAN_MARKER
-      && board[sq3] === HUMAN_MARKER
+      board[sq1] === HUMAN_MARKER &&
+      board[sq2] === HUMAN_MARKER &&
+      board[sq3] === HUMAN_MARKER
     ) {
       return 'You';
     }
 
     if (
-      board[sq1] === COMPUTER_MARKER
-      && board[sq2] === COMPUTER_MARKER
-      && board[sq3] === COMPUTER_MARKER
+      board[sq1] === COMPUTER_MARKER &&
+      board[sq2] === COMPUTER_MARKER &&
+      board[sq3] === COMPUTER_MARKER
     ) {
       return 'I';
     }
@@ -298,9 +298,9 @@ function keepPlaying(anotherGame) {
   anotherGame = readline.question().toLowerCase();
 
   while (
-    !validYesOrNo.includes(anotherGame)
-    && anotherGame !== 'n'
-    && anotherGame !== 'y'
+    !validYesOrNo.includes(anotherGame) &&
+    anotherGame !== 'n' &&
+    anotherGame !== 'y'
   ) {
     printMessage("Please choose: 'yes' or 'no'.");
     anotherGame = readline.question().toLocaleLowerCase();
@@ -311,13 +311,13 @@ function keepPlaying(anotherGame) {
 // greets player
 function greeting() {
   printMessage(
-    "Welcome to the game of Tic-Tac-Toe! Let's play a Best-of-Five tournament!!",
+    "Welcome to the game of Tic-Tac-Toe! Let's play a Best-of-Five tournament!",
   );
 }
 
 // says goodbye to player
 function farewell() {
-  printMessage('Thanks for playing Tic-Tac-Toe! Arrivederci!!');
+  printMessage('Thanks for playing Tic-Tac-Toe! Arrivederci!');
 }
 
 // displays messages to player
