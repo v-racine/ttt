@@ -112,7 +112,7 @@ function mainGameLoop(board, firstPlayer) {
       winner = detectRoundWinner(board);
       if (winner || boardFull(board)) break;
     }
-    
+
     displayBoard(board);
 
     playerChoosesSquare(board);
@@ -284,7 +284,7 @@ function displayTournamentWinner(SCOREBOARD) {
   }
 }
 
-// determines & validates whether player want to play another game
+// determines & validates whether player wants to play another game
 function keepPlaying(anotherGame) {
   const validYesOrNo = ['yes', 'no'];
 
@@ -316,7 +316,7 @@ function farewell() {
   printMessage('Thanks for playing Tic-Tac-Toe! Arrivederci!');
 }
 
-// displays messages to player
+// displays messages to player with arrow 
 function printMessage(message) {
   console.log(`=> ${message}`);
 }
