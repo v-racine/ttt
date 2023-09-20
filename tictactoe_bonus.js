@@ -144,7 +144,7 @@ function playerChoosesSquare(board) {
   return (board[square] = HUMAN_MARKER);
 }
 
-//helper for `playerChoosesSquare`
+//helper for `playerChoosesSquare` (to display available squares)
 function joinOr(array, delimiter = ", ", word = "or") {
   let arrCopy = array.slice();
   arrCopy.pop();
@@ -175,7 +175,7 @@ function computerChoosesSquare(board) {
       if (square) break;
     }
   }
-  // pick square #5 (if available) or random pick
+  // picks square #5 (if available) or random pick
   if (!square) {
     if (board['5'] === EMPTY_MARKER) {
       board['5'] = COMPUTER_MARKER;
@@ -284,7 +284,7 @@ function displayTournamentWinner(SCOREBOARD) {
   }
 }
 
-// determines & validates whether player want to play another game
+// determines & validates whether player wants to play another game
 function keepPlaying(anotherGame) {
   const validYesOrNo = ['yes', 'no'];
 
@@ -316,7 +316,7 @@ function farewell() {
   printMessage('Thanks for playing Tic-Tac-Toe! Arrivederci!');
 }
 
-// displays messages to player
+// displays messages to player with arrow
 function printMessage(message) {
   console.log(`=> ${message}`);
 }
