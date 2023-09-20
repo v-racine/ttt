@@ -14,8 +14,6 @@
   "devDependencies": {
     "babel-eslint": "^10.1.0",
     "eslint": "~7.12.1",
-    "eslint-cli": "^1.1.1",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.28.1"
+    "eslint-cli": "^1.1.1"
   }
 }
