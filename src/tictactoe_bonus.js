@@ -151,19 +151,19 @@ function playerChoosesSquare(board) {
 
 //helper for `playerChoosesSquare`
 function joinOr(array, delimiter = ", ", word = "or") {
-  if (array.length === 0) {
-    return "";
-  } else if (array.length === 1) {
-    return `${array[0]}`;
-  } else if (array.length === 2) {
-    return `${array[0]} ${word} ${array[1]}`;
-  } else {
-    let arrCopy = array.slice();
-    arrCopy.pop();
-    return `${arrCopy.join(delimiter)}${delimiter}${word} ${
-      array[array.length - 1]
-    }`;
-  }
+  switch (array.length) {
+    case 0:
+      return ""; 
+    case 1: 
+      return `${array[0]}`;
+    case 2:  
+      return `${array[0]} ${word} ${array[1]}`;
+    default:
+      let arrCopy = array.slice();
+      arrCopy.pop();
+      return `${arrCopy.join(delimiter)}${delimiter}${word} ${
+      array[array.length - 1]}`; 
+  };
 }
 
 // determines computer's move
