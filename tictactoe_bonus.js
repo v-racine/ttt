@@ -192,7 +192,7 @@ function computerChoosesSquare(board) {
   (board[square] = COMPUTER_MARKER);
 }
 
-//helper for `computerChooseSquare`(offensive strategy)
+//helper for `computerChoosesSquare`(offensive strategy)
 function compOffensiveMove(board, square) {
   for (let index = 0; index < WINNING_LINES.length; index++) {
     const line = WINNING_LINES[index];
