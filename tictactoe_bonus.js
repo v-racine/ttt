@@ -110,25 +110,20 @@ function mainGameLoop(board, firstPlayer) {
     if (firstPlayer === COMPUTER) {
       computerChoosesSquare(board);
       winner = detectRoundWinner(board);
-      if (winner || boardFull(board)) {
-        break;
-      }
+      if (winner || boardFull(board)) break;
     }
-
+    
     displayBoard(board);
 
     playerChoosesSquare(board);
     winner = detectRoundWinner(board);
-    if (winner || boardFull(board)) {
-      break;
-    }
+    if (winner || boardFull(board)) break;
+
 
     if (firstPlayer === PLAYER) {
       computerChoosesSquare(board);
       winner = detectRoundWinner(board);
-      if (winner || boardFull(board)) {
-        break;
-      }
+      if (winner || boardFull(board)) break;
     }
   }
   return winner;
