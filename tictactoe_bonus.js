@@ -112,7 +112,7 @@ function mainGameLoop(board, firstPlayer) {
       winner = detectRoundWinner(board);
       if (winner || boardFull(board)) break;
     }
-    
+
     displayBoard(board);
 
     playerChoosesSquare(board);
