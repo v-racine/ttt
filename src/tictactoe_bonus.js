@@ -151,19 +151,20 @@ function playerChoosesSquare(board) {
 
 //helper for `playerChoosesSquare`
 function joinOr(array, delimiter = ", ", word = "or") {
+  let arrCopy = array.slice();
+  arrCopy.pop();
+
   switch (array.length) {
     case 0:
-      return ""; 
-    case 1: 
+      return "";
+    case 1:
       return `${array[0]}`;
-    case 2:  
+    case 2:
       return `${array[0]} ${word} ${array[1]}`;
     default:
-      let arrCopy = array.slice();
-      arrCopy.pop();
       return `${arrCopy.join(delimiter)}${delimiter}${word} ${
-      array[array.length - 1]}`; 
-  };
+        array[array.length - 1]}`;
+  }
 }
 
 // determines computer's move
@@ -198,7 +199,7 @@ function computerChoosesSquare(board) {
     }
   }
 
-  return (board[square] = COMPUTER_MARKER);
+  (board[square] = COMPUTER_MARKER);
 }
 
 // helper for defensive moves
