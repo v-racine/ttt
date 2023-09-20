@@ -182,8 +182,9 @@ function computerChoosesSquare(board) {
     } else {
       const randomInd = Math.floor(Math.random() * emptySquares(board).length);
       square = emptySquares(board)[randomInd];
-    }
-  }
+    } 
+   }
+    
   (board[square] = COMPUTER_MARKER);
 }
 
