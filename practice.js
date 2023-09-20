@@ -1,6 +1,4 @@
 const readline = require("readline-sync");
-//const { joinOr } = require("../../ttt/joinOr");
-
 const INITIAL_MARKER = " ";
 const HUMAN_MARKER = "X";
 const COMPUTER_MARKER = "O";
@@ -132,7 +130,8 @@ while (true) {
 
 prompt("Thanks for playing Tic Tac Toe!");
 
-//added function:
+
+//added function 
 
 function joinOr(array, delimiter = ", ", word = "or") {
   if (array.length === 0) {
