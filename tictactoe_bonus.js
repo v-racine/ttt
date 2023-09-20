@@ -171,8 +171,7 @@ function joinOr(array, delimiter = ", ", word = "or") {
 function computerChoosesSquare(board) {
   let square;
   // offensive strategy
-  compOffensiveMove(board, square)
-
+  compOffensiveMove(board, square);
   // defensive strategy
   if (!square) {
     for (let index = 0; index < WINNING_LINES.length; index++) {
@@ -185,17 +184,15 @@ function computerChoosesSquare(board) {
   if (!square) {
     if (board['5'] === EMPTY_MARKER) {
       board['5'] = COMPUTER_MARKER;
-    } else {
-      const randomIndex = Math.floor(
-        Math.random() * emptySquares(board).length
-      );
-      square = emptySquares(board)[randomIndex];
     }
+    const randomIndex = Math.floor(Math.random() * emptySquares(board).length);
+    square = emptySquares(board)[randomIndex];
   }
 
   (board[square] = COMPUTER_MARKER);
 }
 
+//helper for `computerChooseSquare`(offensive strategy)
 function compOffensiveMove(board, square) {
   for (let index = 0; index < WINNING_LINES.length; index++) {
     const line = WINNING_LINES[index];
@@ -205,36 +202,7 @@ function compOffensiveMove(board, square) {
   (board[square] = COMPUTER_MARKER);
 }
 
-// function compDefensiveMove(board, square) {
-//   //let square;
-//   //if (!square) {
-//     for (let index = 0; index < WINNING_LINES.length; index++) {
-//       const line = WINNING_LINES[index];
-//       square = findRiskySquare(line, board, HUMAN_MARKER);
-//       if (square) break;
-//     }
-//   //}
-//  (board[square] = COMPUTER_MARKER);
-// }
-
-// function compDefaultMove(board, square) {
-//   //let square;
-//   //if (!square) {
-//     if (board['5'] === EMPTY_MARKER) {
-//       board['5'] = COMPUTER_MARKER;
-//     } else {
-//       const randomIndex = Math.floor(
-//         Math.random() * emptySquares(board).length
-//       );
-//       square = emptySquares(board)[randomIndex];
-//     }
-//   //}
-
-//   (board[square] = COMPUTER_MARKER);
-
-// }
-
-// helper for `computerChoosesSquare`
+// helper for strategies in `computerChoosesSquare`
 function findRiskySquare(line, board, marker) {
   const markersInLine = line.map((square) => board[square]);
   const filteredMarkers = markersInLine.filter((mark) => mark === marker);
