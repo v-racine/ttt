@@ -170,13 +170,8 @@ function joinOr(array, delimiter = ", ", word = "or") {
 // determines computer's move
 function computerChoosesSquare(board) {
   let square;
-
   // offensive strategy
-  for (let index = 0; index < WINNING_LINES.length; index++) {
-    const line = WINNING_LINES[index];
-    square = findRiskySquare(line, board, COMPUTER_MARKER);
-    if (square) break;
-  }
+  compOffensiveMove(board, square)
 
   // defensive strategy
   if (!square) {
@@ -186,7 +181,6 @@ function computerChoosesSquare(board) {
       if (square) break;
     }
   }
-
   // pick square #5 (if available) or random pick
   if (!square) {
     if (board['5'] === EMPTY_MARKER) {
@@ -201,6 +195,44 @@ function computerChoosesSquare(board) {
 
   (board[square] = COMPUTER_MARKER);
 }
+
+function compOffensiveMove(board, square) {
+  for (let index = 0; index < WINNING_LINES.length; index++) {
+    const line = WINNING_LINES[index];
+    square = findRiskySquare(line, board, COMPUTER_MARKER);
+    if (square) break;
+  }
+  (board[square] = COMPUTER_MARKER);
+}
+
+// function compDefensiveMove(board, square) {
+//   //let square;
+//   //if (!square) {
+//     for (let index = 0; index < WINNING_LINES.length; index++) {
+//       const line = WINNING_LINES[index];
+//       square = findRiskySquare(line, board, HUMAN_MARKER);
+//       if (square) break;
+//     }
+//   //}
+//  (board[square] = COMPUTER_MARKER);
+// }
+
+// function compDefaultMove(board, square) {
+//   //let square;
+//   //if (!square) {
+//     if (board['5'] === EMPTY_MARKER) {
+//       board['5'] = COMPUTER_MARKER;
+//     } else {
+//       const randomIndex = Math.floor(
+//         Math.random() * emptySquares(board).length
+//       );
+//       square = emptySquares(board)[randomIndex];
+//     }
+//   //}
+
+//   (board[square] = COMPUTER_MARKER);
+
+// }
 
 // helper for `computerChoosesSquare`
 function findRiskySquare(line, board, marker) {
