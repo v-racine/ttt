@@ -96,7 +96,7 @@ function getFirstMove() {
     firstPlayer = readline.question().toLowerCase();
   }
 
-  if (FIRST_MOVE[0] === "m") {
+  if (FIRST_MOVE[0].includes(firstPlayer)) {
     return playerIsStarter;
   }
 
@@ -167,7 +167,7 @@ function computerChoosesSquare(board) {
   let square;
   // offensive strategy
   compOffensiveMove(board, square);
-  // defensive strategy
+  //defensive strategy
   if (!square) {
     for (let index = 0; index < WINNING_LINES.length; index++) {
       const line = WINNING_LINES[index];
