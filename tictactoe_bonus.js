@@ -288,18 +288,14 @@ function displayTournamentWinner(SCOREBOARD) {
 
 // determines & validates whether player wants to play another game
 function keepPlaying(anotherGame) {
-  const validYesOrNo = ['yes', 'no'];
+  const validYesOrNo = ['yes', 'no', 'y', 'n'];
 
   printMessage(
-    `Do you want to play again? Choose ${validYesOrNo.join(' or ')}.`,
+    "Do you want to play again? Choose 'yes' or 'no'.",
   );
   anotherGame = readline.question().toLowerCase();
 
-  while (
-    !validYesOrNo.includes(anotherGame) &&
-    anotherGame !== 'n' &&
-    anotherGame !== 'y'
-  ) {
+  while (!validYesOrNo.includes(anotherGame)) {
     printMessage("Please choose: 'yes' or 'no'.");
     anotherGame = readline.question().toLowerCase();
   }
