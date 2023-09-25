@@ -16,6 +16,8 @@ module.exports = {
   PLAYER: "me",
   COMPUTER: "you",
   END_OF_TOURNAMENT: 3,
+  PLAYER_WINNER: "You",
+  COMPUTER_WINNER: "I",
 };
 
 // const EMPTY_MARKER = " ";

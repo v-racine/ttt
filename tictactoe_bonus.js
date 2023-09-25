@@ -8,6 +8,8 @@ const {
   PLAYER,
   COMPUTER,
   END_OF_TOURNAMENT,
+  PLAYER_WINNER,
+  COMPUTER_WINNER,
 } = require('./constants');
 
 /* MAIN FUNCTION */
@@ -222,7 +224,7 @@ function detectRoundWinner(board) {
       board[sq2] === HUMAN_MARKER &&
       board[sq3] === HUMAN_MARKER
     ) {
-      return 'You';
+      return PLAYER_WINNER;
     }
 
     if (
@@ -230,7 +232,7 @@ function detectRoundWinner(board) {
       board[sq2] === COMPUTER_MARKER &&
       board[sq3] === COMPUTER_MARKER
     ) {
-      return 'I';
+      return COMPUTER_WINNER;
     }
   }
 
@@ -259,9 +261,9 @@ function displayRoundWinner(board, winner) {
 
 // keeps track of round winners in best-of-five tournament
 function scoreTracker(winner, SCOREBOARD) {
-  if (winner === 'You') {
+  if (winner === PLAYER_WINNER) {
     SCOREBOARD.playerScore++;
-  } else if (winner === 'I') {
+  } else if (winner === COMPUTER_WINNER) {
     SCOREBOARD.compScore++;
   }
 }
