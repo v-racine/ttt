@@ -12,43 +12,50 @@ const {
   COMPUTER_WINNER,
 } = require('./constants');
 
-/* MAIN FUNCTION */
-// starts the best-of-five tournament
 
-function playTicTacToeTournament() {
+/* MAIN FUNCTION */
+
+function playTicTacToe() {
   greeting();
 
   const scoreBoard = { playerScore: 0, compScore: 0 };
 
-  const initialPlayer = getFirstMove();
   let anotherGame = 'y';
-
   while (anotherGame[0] === 'y') {
-    while (
-      scoreBoard.playerScore !== END_OF_TOURNAMENT &&
-      scoreBoard.compScore !== END_OF_TOURNAMENT
-    ) {
-      const board = initializeBoard();
-
-      const winner = mainGameLoop(board, initialPlayer);
-
-      scoreTracker(winner, scoreBoard);
-      displayRoundWinner(board, winner);
-      displayScores(scoreBoard);
-      displayTournamentWinner(scoreBoard);
-    }
+    playTournament(scoreBoard);
     anotherGame = keepPlaying(anotherGame);
 
     console.clear();
     scoreBoard.playerScore = 0;
     scoreBoard.compScore = 0;
   }
+
   farewell();
 }
 
-playTicTacToeTournament();
+playTicTacToe();
 
 /* HELPER FUNCTIONS */
+
+//executes Tic-Tac-Toe tournament
+function playTournament(scoreBoard) {
+  let initialPlayer = getFirstMove();
+
+  while (
+    scoreBoard.playerScore !== END_OF_TOURNAMENT &&
+    scoreBoard.compScore !== END_OF_TOURNAMENT
+  ) {
+
+    const board = initializeBoard();
+    const winner = mainGameLoop(board, initialPlayer);
+
+    scoreTracker(winner, scoreBoard);
+    displayRoundWinner(board, winner);
+    displayScores(scoreBoard);
+    displayTournamentWinner(scoreBoard);
+  }
+}
+
 
 // creates board
 function initializeBoard() {
