@@ -85,20 +85,16 @@ function getFirstMove() {
   const playerIsStarter = PLAYER;
   const computerIsStarter = COMPUTER;
 
-  printMessage(`Who shall get the first turn? ${FIRST_MOVE.join(' or ')}?`);
+  printMessage("Who shall get the first turn? 'me' or 'you'");
 
   let firstPlayer = readline.question().toLowerCase();
 
-  while (
-    !FIRST_MOVE.includes(firstPlayer) &&
-    firstPlayer !== 'm' &&
-    firstPlayer !== 'y'
-  ) {
+  while (!FIRST_MOVE.includes(firstPlayer)) {
     printMessage("Please choose: 'me' or 'you'.");
     firstPlayer = readline.question().toLowerCase();
   }
 
-  if (FIRST_MOVE[0].includes(firstPlayer)) {
+  if (firstPlayer === FIRST_MOVE[0] || firstPlayer === FIRST_MOVE[1]) {
     return playerIsStarter;
   }
 

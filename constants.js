@@ -12,7 +12,7 @@ module.exports = {
     [1, 5, 9],
     [3, 5, 7],
   ],
-  FIRST_MOVE: ["me", "you"],
+  FIRST_MOVE: ["me", "m", "you", "y"],
   PLAYER: "me",
   COMPUTER: "you",
   END_OF_TOURNAMENT: 3,
