@@ -93,10 +93,10 @@ function getFirstMove() {
     firstPlayer !== 'y'
   ) {
     printMessage("Please choose: 'me' or 'you'.");
-    firstPlayer = readline.question().toLocaleLowerCase();
+    firstPlayer = readline.question().toLowerCase();
   }
 
-  if (FIRST_MOVE[0].includes(firstPlayer)) {
+  if (FIRST_MOVE[0] === "m") {
     return playerIsStarter;
   }
 
@@ -299,7 +299,7 @@ function keepPlaying(anotherGame) {
     anotherGame !== 'y'
   ) {
     printMessage("Please choose: 'yes' or 'no'.");
-    anotherGame = readline.question().toLocaleLowerCase();
+    anotherGame = readline.question().toLowerCase();
   }
   return anotherGame;
 }
