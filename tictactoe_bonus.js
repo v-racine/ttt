@@ -16,30 +16,30 @@ const {
 function playTicTacToeTournament() {
   greeting();
 
-  const SCOREBOARD = { playerScore: 0, compScore: 0 };
+  const scoreBoard = { playerScore: 0, compScore: 0 };
 
   const initialPlayer = getFirstMove();
   let anotherGame = 'y';
 
   while (anotherGame[0] === 'y') {
     while (
-      SCOREBOARD.playerScore !== END_OF_TOURNAMENT &&
-      SCOREBOARD.compScore !== END_OF_TOURNAMENT
+      scoreBoard.playerScore !== END_OF_TOURNAMENT &&
+      scoreBoard.compScore !== END_OF_TOURNAMENT
     ) {
       const board = initializeBoard();
 
       const winner = mainGameLoop(board, initialPlayer);
 
-      scoreTracker(winner, SCOREBOARD);
+      scoreTracker(winner, scoreBoard);
       displayRoundWinner(board, winner);
-      displayScores(SCOREBOARD);
-      displayTournamentWinner(SCOREBOARD);
+      displayScores(scoreBoard);
+      displayTournamentWinner(scoreBoard);
     }
     anotherGame = keepPlaying(anotherGame);
 
     console.clear();
-    SCOREBOARD.playerScore = 0;
-    SCOREBOARD.compScore = 0;
+    scoreBoard.playerScore = 0;
+    scoreBoard.compScore = 0;
   }
   farewell();
 }
